@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 
 class ProductController extends Controller
@@ -60,6 +61,7 @@ class ProductController extends Controller
         ->with('success', 'product added successfully');
     }
     
+   
     public function show(Product $product)
     {
     return view('products.show', compact('product'));
@@ -78,6 +80,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
 {
+      Log::info('Product updated', [
+    'id' => $product->id,
+    ]);
+
     $validated = $request->validate([
         // the same rules you wrote in store()
     ]);
@@ -85,6 +91,7 @@ class ProductController extends Controller
     $product->update($validated);
  
     return redirect()->route('products.index');
+    
 }
 
 
@@ -93,12 +100,12 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-      
-        $product->delete();
+      abort_if($product->brand()->count() === 1, 403);
 
-        return redirect()->route('products.index') 
-            ->with('success', 'Product deleted successfully');
-        
+
+    $product->delete();
+    return redirect()->route('products.index');
+
 
     }
 }
