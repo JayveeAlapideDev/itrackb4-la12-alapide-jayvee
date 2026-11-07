@@ -1,8 +1,7 @@
-
 QUESTIONS
 
-G1. Route model binding needs the controller parameter type-hinted with an Eloquent model and its variable name to match the route wildcard; with only the type-hint, Laravel injects a blank model instead of looking one up, and with only the matching name, you just get the raw string from the URL.
+H1. The top of my error page named a file in vendor because that is where Laravel threw the error when it couldn’t find my misspelled method withh(). My mistake was the extra letter in index() in ProducrController.php, line 123. The Exception trace showed it in the first frame outside vendor, already opened with that line marked.
 
-G2. The Delete link opened the detail page because a plain <a> link sends a GET request, and the delete route only accepts DELETE, so the only matching route was show.
+H2. It records what actually happened on normal requests, in storage/logs/laravel.log, with timestamps and the values passed in (like product_id or filter). The error page only appears at the moment of a crash, so it can’t show silent wrong-output bugs or what happened last month.
 
-G3. Without the second argument the edit form’s fields start empty instead of showing the saved values, and with only the second value the form loads correctly but wipes whatever the user typed whenever validation fails and redirects back
+H3. 403 is better when the person isn’t allowed and nothing they do will change. Redirect with a message is better when they can fix it and try again, like validation errors or an expired session, so they keep their input and see what to correct
